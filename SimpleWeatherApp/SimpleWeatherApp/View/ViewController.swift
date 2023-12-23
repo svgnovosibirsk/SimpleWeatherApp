@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
-        label.text = "Karaganda"
+        label.text = Constants.testCityName
         return label
     }()
     
@@ -54,13 +54,65 @@ class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_40)
-        label.text = "+21"
+        label.text = Constants.testTemperature
         return label
     }()
     
     let iconImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: Constants.iconSunny))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    let forcastStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.backgroundColor = .clear
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        return stack
+    }()
+    
+    let forecastLabelFirst: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
+        label.text = Constants.testTemperature
+        label.layer.borderWidth = Constants.borderWidth_2
+        label.layer.borderColor = UIColor.white.cgColor
+        label.layer.cornerRadius = Constants.cornerRadius_5
+        return label
+    }()
+    
+    let forecastLabelSecond: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
+        label.text = Constants.testTemperature
+        label.layer.borderWidth = Constants.borderWidth_2
+        label.layer.borderColor = UIColor.white.cgColor
+        label.layer.cornerRadius = Constants.cornerRadius_5
+        return label
+    }()
+    
+    let forecastLabelThird: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
+        label.text = Constants.testTemperature
+        label.layer.borderWidth = Constants.borderWidth_2
+        label.layer.borderColor = UIColor.white.cgColor
+        label.layer.cornerRadius = Constants.cornerRadius_5
+        return label
     }()
 
     //MARK: Lifecycle
@@ -84,6 +136,7 @@ private extension ViewController {
         setupCityNameLabel()
         setupTemperatureLabel()
         setupIconImageView()
+        setForcastStackView()
     }
     
     func setupSelectCityTextField() {
@@ -128,6 +181,20 @@ private extension ViewController {
             make.top.equalTo(temperatureLabel.snp.bottom).offset(Constants.constant_20)
             make.centerX.equalToSuperview()
             make.width.equalTo(Constants.constant_100)
+            make.height.equalTo(Constants.constant_100)
+        }
+    }
+    
+    func setForcastStackView() {
+        view.addSubview(forcastStackView)
+        forcastStackView.addArrangedSubview(forecastLabelFirst)
+        forcastStackView.addArrangedSubview(forecastLabelSecond)
+        forcastStackView.addArrangedSubview(forecastLabelThird)
+        
+        forcastStackView.snp.makeConstraints { make in
+            make.top.equalTo(iconImageView.snp.bottom).offset(Constants.constant_20)
+            make.leading.equalToSuperview().offset(Constants.constant_20)
+            make.trailing.equalToSuperview().offset(-Constants.constant_20)
             make.height.equalTo(Constants.constant_100)
         }
     }
