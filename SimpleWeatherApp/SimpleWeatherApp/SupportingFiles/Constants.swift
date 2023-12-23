@@ -22,9 +22,10 @@ enum Constants {
     static let constant_200: CGFloat = 200.0
     
     static let cityNamePlaceholder = "enter city name"
-    static let testCityName = "Karaganda"
+    //static let testCityName = "Karaganda"
     static let buttonTitle = "get weather"
     static let iconSunny = "sunny"
-    static let testTemperature = "+21"
+    //static let testTemperature = "+21"
+    static let emptyString = " "
     static let locationUnavailable = "Location Unavailable"
 }

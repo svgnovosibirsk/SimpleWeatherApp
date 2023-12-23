@@ -41,12 +41,18 @@ final class ViewModel: NSObject {
         getWeatherDataFromNetwork(with: params)
     }
     
-    func updateProperties(with dataModel: WeatherDataModel) {
+    private func updateProperties(with dataModel: WeatherDataModel) {
         cityName.onNext(dataModel.city)
         temperature.onNext("\(dataModel.temperature)")
         let iconImageName = dataModel.weatherIconName
         if let image = UIImage(named: iconImageName) {
             iconImage.onNext(image)
+        }
+    }
+    
+    private func updateForecastProperties(with dict: [String: Double]) {
+        for (key, val) in dict {
+            print("\(key): \(val)")
         }
     }
     
@@ -57,11 +63,21 @@ final class ViewModel: NSObject {
         locationManager.startUpdatingLocation()
     }
     
+    //TODO: To make weather and forcast requests via Dispatch group and update UI when they both a finished
     private func getWeatherDataFromNetwork(with params: [String: String]) {
         networkManager.getWeatherData(parameters: params)
             .subscribe(onNext: { [weak self] json in
                 if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
                     self?.updateProperties(with: weatherModel)
+                }
+            }).disposed(by: disposeBag)
+    }
+    
+    private func getWeatherForecastFromNetwork(with params: [String: String]) {
+        networkManager.getWeatherForcast(parameters: params)
+            .subscribe(onNext: { [weak self] json in
+                if let forecast = self?.jsonParser.parseWeatherForecast(from: json) {
+                    self?.updateForecastProperties(with: forecast)
                 }
             }).disposed(by: disposeBag)
     }
@@ -83,7 +99,9 @@ extension ViewModel: CLLocationManagerDelegate {
                                             "lon": longitude,
                                             "appid": Constants.appId]
            
+            //TODO: join in dispatch group
             getWeatherDataFromNetwork(with: params)
+            getWeatherForecastFromNetwork(with: params)
         }
     }
     

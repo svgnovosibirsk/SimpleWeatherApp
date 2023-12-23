@@ -30,4 +30,34 @@ final class JsonParser {
         
         return weatherModel
     }
+    
+    func parseWeatherForecast(from json: [String: Any]) -> [String: Double] {
+        var forecasts: [String: Double] = [:]
+        //TODO: Keys to Constants
+        if let forecastList = json["list"] as? [[String: Any]] {
+            var i = 10
+            
+            while i <= 26 {
+                var forecast = forecastList[i]
+                var day = ""
+                
+                if let textDate = forecast["dt_txt"] as? String {
+                    let start = textDate.index(textDate.startIndex, offsetBy: 8)
+                    let end = textDate.index(textDate.startIndex, offsetBy: 11)
+                    let range = start..<end
+                    let substring = String(textDate[range]).trimmingCharacters(in: .whitespaces)
+                    day = substring
+                }
+                
+                if let weather = forecast["main"] as? [String: Any] {
+                    if let temperature = weather["temp"] as? Double {
+                        forecasts[day] = temperature
+                    }
+                }
+                
+                i += 8
+            }
+        }
+        return forecasts
+    }
 }

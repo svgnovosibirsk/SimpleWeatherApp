@@ -48,7 +48,8 @@ final class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
-        label.text = Constants.testCityName
+        //label.text = Constants.testCityName
+        label.text = Constants.emptyString
         return label
     }()
     
@@ -59,7 +60,8 @@ final class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_40)
-        label.text = Constants.testTemperature
+        //label.text = Constants.testTemperature
+        label.text = Constants.emptyString
         return label
     }()
     
@@ -85,7 +87,7 @@ final class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
-        label.text = Constants.testTemperature
+        label.text = Constants.emptyString
         label.layer.borderWidth = Constants.borderWidth_2
         label.layer.borderColor = UIColor.white.cgColor
         label.layer.cornerRadius = Constants.cornerRadius_5
@@ -99,7 +101,7 @@ final class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
-        label.text = Constants.testTemperature
+        label.text = Constants.emptyString
         label.layer.borderWidth = Constants.borderWidth_2
         label.layer.borderColor = UIColor.white.cgColor
         label.layer.cornerRadius = Constants.cornerRadius_5
@@ -113,7 +115,7 @@ final class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
-        label.text = Constants.testTemperature
+        label.text = Constants.emptyString
         label.layer.borderWidth = Constants.borderWidth_2
         label.layer.borderColor = UIColor.white.cgColor
         label.layer.cornerRadius = Constants.cornerRadius_5
@@ -154,6 +156,8 @@ final class ViewController: UIViewController {
         viewModel.forecastThird.bind(to: forecastLabelThird.rx.text)
             .disposed(by: disposeBag)
     }
+    
+    //TODO: Implement Keyboard handling
 }
 
 //MARK: Setup UI

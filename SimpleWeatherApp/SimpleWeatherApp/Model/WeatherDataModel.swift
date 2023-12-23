@@ -7,7 +7,8 @@
 
 import Foundation
 
-class WeatherDataModel {
+//TODO: convert class to struct
+final class WeatherDataModel {
     
     var temperature = 0
     var condition = 0
