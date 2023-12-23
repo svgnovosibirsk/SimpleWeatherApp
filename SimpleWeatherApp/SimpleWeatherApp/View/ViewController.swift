@@ -226,5 +226,4 @@ private extension ViewController {
             make.height.equalTo(Constants.constant_100)
         }
     }
-    
 }

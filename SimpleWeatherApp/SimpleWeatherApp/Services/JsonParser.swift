@@ -11,6 +11,7 @@ final class JsonParser {
     func parseWeatherData(from json: [String: Any]) -> WeatherDataModel? {
         let weatherModel = WeatherDataModel()
         
+        //TODO: Keys to Constants
         if let response = json["main"] as? [String: Any] {
             if let temp = response["temp"] as? Double {
                 weatherModel.temperature = Int(temp - 273.15)

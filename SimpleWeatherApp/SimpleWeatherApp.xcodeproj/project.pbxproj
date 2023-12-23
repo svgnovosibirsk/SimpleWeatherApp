@@ -73,13 +73,11 @@
 		7C3B11D02B369E2700314976 /* SimpleWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				7C3B11F32B36E8C400314976 /* SupportingFiles */,
 				7C3B11EE2B36DF0800314976 /* Services */,
 				7C3B11E62B369FA800314976 /* Model */,
 				7C3B11E52B369F9D00314976 /* View */,
 				7C3B11E72B369FAF00314976 /* ViewModel */,
-				7C3B11E82B36AAD000314976 /* Constants.swift */,
-				7C3B11D12B369E2700314976 /* AppDelegate.swift */,
-				7C3B11D32B369E2700314976 /* SceneDelegate.swift */,
 				7C3B11D72B369E2700314976 /* Main.storyboard */,
 				7C3B11DA2B369E2800314976 /* Assets.xcassets */,
 				7C3B11DC2B369E2800314976 /* LaunchScreen.storyboard */,
@@ -119,6 +117,16 @@
 				7C3B11F12B36E0F000314976 /* JsonParser.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		7C3B11F32B36E8C400314976 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7C3B11E82B36AAD000314976 /* Constants.swift */,
+				7C3B11D12B369E2700314976 /* AppDelegate.swift */,
+				7C3B11D32B369E2700314976 /* SceneDelegate.swift */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		AD60BF3AAA87123310240ADB /* Pods */ = {

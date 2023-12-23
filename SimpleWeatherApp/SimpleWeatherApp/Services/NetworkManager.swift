@@ -16,6 +16,7 @@ final class NetworkManager {
     }
     // TODO: Error handling
     func getWeatherData(parameters: [String: String]) -> Observable<[String: Any]> {
+        //TODO: URL and Keys to Constants
         var urlStr = "https://api.openweathermap.org/data/2.5/weather?q=London&appid=\(Constants.appId)"
         
         if let city = parameters["q"] {
@@ -26,9 +27,9 @@ final class NetworkManager {
             urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(Constants.appId)"
         }
         
-        let url = URL(string: urlStr)!
+        let url = URL(string: urlStr)! // TODO: Handle !
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = "GET" // //TODO: GET to Constants
         
         return URLSession.shared.rx.response(request: request)
             .map { result -> Data in

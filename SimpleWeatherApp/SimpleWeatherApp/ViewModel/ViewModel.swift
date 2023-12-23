@@ -27,41 +27,18 @@ final class ViewModel: NSObject {
     let networkManager = NetworkManager()
     let jsonParser = JsonParser()
     
-    let weatherDataModel = WeatherDataModel() // make as parametr in methods
-    
     //MARK: - Lifecycle
     override init() {
         super.init()
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-        //updatePropertiesWithWeatherData()
+        setupLocationManager()
     }
     
     //MARK: - Methods
     func getWeatherButtonDidPress(with cityName: String) {
-        print(#function)
+        //TODO: Keys to Constants
         let params = ["q": cityName, "appid": Constants.appId]
         getWeatherDataFromNetwork(with: params)
-        
-//        networkManager.getWeatherData(parameters: params)
-//            .subscribe(onNext: { [weak self] json in
-//                //print(json)
-//                //self?.updatePropertiesWithWeatherData(json: json )
-//                if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
-//                    self?.updateProperties(with: weatherModel)
-//                }
-//            }).disposed(by: disposeBag)
-        
-//        cityName.onNext("Gothem city") // TEST
-//        iconImage.onNext(UIImage(named: "snow5")!) // TEST
-//        temperature.onNext("-12") // TEST
-//        forecastFirst.onNext("-11") // TEST
-//        forecastSecond.onNext("-10") // TEST
-//        forecastThird.onNext("-12") // TEST
     }
     
     func updateProperties(with dataModel: WeatherDataModel) {
@@ -73,11 +50,16 @@ final class ViewModel: NSObject {
         }
     }
     
+    private func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
     private func getWeatherDataFromNetwork(with params: [String: String]) {
         networkManager.getWeatherData(parameters: params)
             .subscribe(onNext: { [weak self] json in
-                //print(json)
-                //self?.updatePropertiesWithWeatherData(json: json )
                 if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
                     self?.updateProperties(with: weatherModel)
                 }
@@ -96,18 +78,11 @@ extension ViewModel: CLLocationManagerDelegate {
             let latitude = String(location.coordinate.latitude)
             let longitude = String(location.coordinate.longitude)
             
+            //TODO: Keys to Constants
             let params: [String: String] = ["lat": latitude,
                                             "lon": longitude,
                                             "appid": Constants.appId]
            
-//            networkManager.getWeatherData(parameters: params)
-//                .subscribe(onNext: { [weak self] json in
-//                    //print(json)
-//                    //self?.updatePropertiesWithWeatherData(json: json )
-//                    if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
-//                        self?.updateProperties(with: weatherModel)
-//                    }
-//                }).disposed(by: disposeBag)
             getWeatherDataFromNetwork(with: params)
         }
     }
