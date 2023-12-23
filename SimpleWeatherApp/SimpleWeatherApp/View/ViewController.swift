@@ -46,6 +46,22 @@ class ViewController: UIViewController {
         label.text = "Karaganda"
         return label
     }()
+    
+    let temperatureLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_40)
+        label.text = "+21"
+        return label
+    }()
+    
+    let iconImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: Constants.iconSunny))
+        return imageView
+    }()
 
     //MARK: Lifecycle
     override func viewDidLoad() {
@@ -66,6 +82,8 @@ private extension ViewController {
         setupSelectCityTextField()
         setupGetWeatherButton()
         setupCityNameLabel()
+        setupTemperatureLabel()
+        setupIconImageView()
     }
     
     func setupSelectCityTextField() {
@@ -93,6 +111,24 @@ private extension ViewController {
         cityNameLabel.snp.makeConstraints { make in
             make.top.equalTo(getWeatherButton.snp.bottom).offset(Constants.constant_20)
             make.centerX.equalToSuperview()
+        }
+    }
+    
+    func setupTemperatureLabel() {
+        view.addSubview(temperatureLabel)
+        temperatureLabel.snp.makeConstraints { make in
+            make.top.equalTo(cityNameLabel.snp.bottom).offset(Constants.constant_20)
+            make.centerX.equalToSuperview()
+        }
+    }
+    
+    func setupIconImageView() {
+        view.addSubview(iconImageView)
+        iconImageView.snp.makeConstraints { make in
+            make.top.equalTo(temperatureLabel.snp.bottom).offset(Constants.constant_20)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(Constants.constant_100)
+            make.height.equalTo(Constants.constant_100)
         }
     }
     

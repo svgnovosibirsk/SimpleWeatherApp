@@ -9,6 +9,8 @@ import Foundation
 
 enum Constants {
     static let fontSize_20: CGFloat = 20.0
+    static let fontSize_40: CGFloat = 40.0
+    
     static let borderWidth_2: CGFloat = 2.0
     static let cornerRadius_5: CGFloat = 5.0
     
@@ -19,4 +21,5 @@ enum Constants {
     
     static let cityNamePlaceholder = "enter city name"
     static let buttonTitle = "get weather"
+    static let iconSunny = "sunny"
 }
