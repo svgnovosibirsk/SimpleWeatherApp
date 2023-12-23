@@ -71,7 +71,7 @@ final class ViewController: UIViewController {
         return imageView
     }()
     
-    let forcastStackView: UIStackView = {
+    let forcastDateStackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.backgroundColor = .clear
@@ -80,35 +80,61 @@ final class ViewController: UIViewController {
         return stack
     }()
     
-    let forecastLabelFirst: UILabel = {
+    let forcastTemperatureStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.backgroundColor = .clear
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        return stack
+    }()
+    
+    let forecastTemperatureLabelFirst: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_30)
         label.text = Constants.emptyString
+        label.textAlignment = .center
         label.layer.borderWidth = Constants.borderWidth_2
         label.layer.borderColor = UIColor.white.cgColor
         label.layer.cornerRadius = Constants.cornerRadius_5
         return label
     }()
     
-    let forecastLabelSecond: UILabel = {
+    let forecastTemperatureLabelSecond: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_30)
         label.text = Constants.emptyString
+        label.textAlignment = .center
         label.layer.borderWidth = Constants.borderWidth_2
         label.layer.borderColor = UIColor.white.cgColor
         label.layer.cornerRadius = Constants.cornerRadius_5
         return label
     }()
     
-    let forecastLabelThird: UILabel = {
+    let forecastTemperatureLabelThird: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_30)
+        label.text = Constants.emptyString
+        label.textAlignment = .center
+        label.layer.borderWidth = Constants.borderWidth_2
+        label.layer.borderColor = UIColor.white.cgColor
+        label.layer.cornerRadius = Constants.cornerRadius_5
+        return label
+    }()
+    
+    let forecastDateLabelFirst: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
@@ -116,9 +142,31 @@ final class ViewController: UIViewController {
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
         label.text = Constants.emptyString
-        label.layer.borderWidth = Constants.borderWidth_2
-        label.layer.borderColor = UIColor.white.cgColor
-        label.layer.cornerRadius = Constants.cornerRadius_5
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let forecastDateLabelSecond: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
+        label.text = Constants.emptyString
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let forecastDateLabelThird: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
+        label.text = Constants.emptyString
+        label.textAlignment = .center
         return label
     }()
 
@@ -147,13 +195,22 @@ final class ViewController: UIViewController {
         viewModel.iconImage.bind(to: iconImageView.rx.image)
             .disposed(by: disposeBag)
         
-        viewModel.forecastFirst.bind(to: forecastLabelFirst.rx.text)
+        viewModel.forecastTemperatureFirst.bind(to: forecastTemperatureLabelFirst.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.forecastSecond.bind(to: forecastLabelSecond.rx.text)
+        viewModel.forecastTemperatureSecond.bind(to: forecastTemperatureLabelSecond.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.forecastThird.bind(to: forecastLabelThird.rx.text)
+        viewModel.forecastTemperatureThird.bind(to: forecastTemperatureLabelThird.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.forecastDateFirst.bind(to: forecastDateLabelFirst.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.forecastDateSecond.bind(to: forecastDateLabelSecond.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.forecastDateThird.bind(to: forecastDateLabelThird.rx.text)
             .disposed(by: disposeBag)
     }
     
@@ -168,6 +225,7 @@ private extension ViewController {
         setupCityNameLabel()
         setupTemperatureLabel()
         setupIconImageView()
+        setupForcastDateStackView()
         setForcastStackView()
     }
     
@@ -217,17 +275,31 @@ private extension ViewController {
         }
     }
     
-    func setForcastStackView() {
-        view.addSubview(forcastStackView)
-        forcastStackView.addArrangedSubview(forecastLabelFirst)
-        forcastStackView.addArrangedSubview(forecastLabelSecond)
-        forcastStackView.addArrangedSubview(forecastLabelThird)
+    func setupForcastDateStackView() {
+        view.addSubview(forcastDateStackView)
+        forcastDateStackView.addArrangedSubview(forecastDateLabelFirst)
+        forcastDateStackView.addArrangedSubview(forecastDateLabelSecond)
+        forcastDateStackView.addArrangedSubview(forecastDateLabelThird)
         
-        forcastStackView.snp.makeConstraints { make in
+        forcastDateStackView.snp.makeConstraints { make in
             make.top.equalTo(iconImageView.snp.bottom).offset(Constants.constant_20)
             make.leading.equalToSuperview().offset(Constants.constant_20)
             make.trailing.equalToSuperview().offset(-Constants.constant_20)
-            make.height.equalTo(Constants.constant_100)
+            make.height.equalTo(Constants.constant_50)
+        }
+    }
+    
+    func setForcastStackView() {
+        view.addSubview(forcastTemperatureStackView)
+        forcastTemperatureStackView.addArrangedSubview(forecastTemperatureLabelFirst)
+        forcastTemperatureStackView.addArrangedSubview(forecastTemperatureLabelSecond)
+        forcastTemperatureStackView.addArrangedSubview(forecastTemperatureLabelThird)
+        
+        forcastTemperatureStackView.snp.makeConstraints { make in
+            make.top.equalTo(forcastDateStackView.snp.bottom)
+            make.leading.equalToSuperview().offset(Constants.constant_20)
+            make.trailing.equalToSuperview().offset(-Constants.constant_20)
+            make.height.equalTo(Constants.constant_80)
         }
     }
 }

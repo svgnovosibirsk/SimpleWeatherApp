@@ -17,9 +17,12 @@ final class ViewModel: NSObject {
     var cityName = PublishSubject<String>()
     var temperature = PublishSubject<String>()
     var iconImage = PublishSubject<UIImage>()
-    var forecastFirst = PublishSubject<String>()
-    var forecastSecond = PublishSubject<String>()
-    var forecastThird = PublishSubject<String>()
+    var forecastTemperatureFirst = PublishSubject<String>()
+    var forecastTemperatureSecond = PublishSubject<String>()
+    var forecastTemperatureThird = PublishSubject<String>()
+    var forecastDateFirst = PublishSubject<String>()
+    var forecastDateSecond = PublishSubject<String>()
+    var forecastDateThird = PublishSubject<String>()
     
     let disposeBag = DisposeBag()
     
@@ -38,7 +41,10 @@ final class ViewModel: NSObject {
     func getWeatherButtonDidPress(with cityName: String) {
         //TODO: Keys to Constants
         let params = ["q": cityName, "appid": Constants.appId]
+        
+        //TODO: To make weather and forcast requests via Dispatch group and update UI when they both a finished
         getWeatherDataFromNetwork(with: params)
+        getWeatherForecastFromNetwork(with: params)
     }
     
     private func updateProperties(with dataModel: WeatherDataModel) {
@@ -51,9 +57,15 @@ final class ViewModel: NSObject {
     }
     
     private func updateForecastProperties(with dict: [String: Double]) {
-        for (key, val) in dict {
-            print("\(key): \(val)")
-        }
+        let sortedForecasts = dict.sorted{ Int($0.key) ?? 0 < Int($1.key) ?? 0 }
+        
+        forecastDateFirst.onNext("\(sortedForecasts[0].key)")
+        forecastDateSecond.onNext("\(sortedForecasts[1].key)")
+        forecastDateThird.onNext("\(sortedForecasts[2].key)")
+        
+        forecastTemperatureFirst.onNext("\(Int(sortedForecasts[0].value - 273.15))")
+        forecastTemperatureSecond.onNext("\(Int(sortedForecasts[1].value - 273.15))")
+        forecastTemperatureThird.onNext("\(Int(sortedForecasts[2].value - 273.15))")
     }
     
     private func setupLocationManager() {
