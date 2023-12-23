@@ -7,10 +7,15 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     //MARK: Properties
+    let viewModel = ViewModel()
+    let disposeBag = DisposeBag()
+    
     let selectCityTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -121,10 +126,36 @@ class ViewController: UIViewController {
         view.backgroundColor = .systemCyan
         
         setupScreen()
+        bindToViewModel()
     }
     
+    //MARK: - Flow
     @objc func getWeatherButtonDidPress() {
         print(#function)
+        
+//        viewModel.cityName.onNext("Gothem city") // TEST
+//        viewModel.iconImage.onNext(UIImage(named: "snow5")!) // TEST
+//        viewModel.temperature.onNext("-12") // TEST
+    }
+    
+    private func bindToViewModel() {
+        viewModel.cityName.bind(to: cityNameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.temperature.bind(to: temperatureLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.iconImage.bind(to: iconImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        viewModel.forecastFirst.bind(to: forecastLabelFirst.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.forecastSecond.bind(to: forecastLabelSecond.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.forecastThird.bind(to: forecastLabelThird.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 
