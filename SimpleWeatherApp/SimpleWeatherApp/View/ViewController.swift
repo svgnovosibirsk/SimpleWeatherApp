@@ -131,7 +131,8 @@ final class ViewController: UIViewController {
     
     //MARK: - Flow
     @objc func getWeatherButtonDidPress() {
-        viewModel.getWeatherButtonDidPress()
+        let cityName = selectCityTextField.text!
+        viewModel.getWeatherButtonDidPress(with: cityName)
     }
     
     private func bindToViewModel() {

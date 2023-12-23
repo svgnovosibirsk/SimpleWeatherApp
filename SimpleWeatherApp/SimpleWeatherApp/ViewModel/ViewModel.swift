@@ -42,8 +42,20 @@ final class ViewModel: NSObject {
     }
     
     //MARK: - Methods
-    func getWeatherButtonDidPress() {
+    func getWeatherButtonDidPress(with cityName: String) {
         print(#function)
+        let params = ["q": cityName, "appid": Constants.appId]
+        getWeatherDataFromNetwork(with: params)
+        
+//        networkManager.getWeatherData(parameters: params)
+//            .subscribe(onNext: { [weak self] json in
+//                //print(json)
+//                //self?.updatePropertiesWithWeatherData(json: json )
+//                if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
+//                    self?.updateProperties(with: weatherModel)
+//                }
+//            }).disposed(by: disposeBag)
+        
 //        cityName.onNext("Gothem city") // TEST
 //        iconImage.onNext(UIImage(named: "snow5")!) // TEST
 //        temperature.onNext("-12") // TEST
@@ -59,6 +71,17 @@ final class ViewModel: NSObject {
         if let image = UIImage(named: iconImageName) {
             iconImage.onNext(image)
         }
+    }
+    
+    private func getWeatherDataFromNetwork(with params: [String: String]) {
+        networkManager.getWeatherData(parameters: params)
+            .subscribe(onNext: { [weak self] json in
+                //print(json)
+                //self?.updatePropertiesWithWeatherData(json: json )
+                if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
+                    self?.updateProperties(with: weatherModel)
+                }
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -77,14 +100,15 @@ extension ViewModel: CLLocationManagerDelegate {
                                             "lon": longitude,
                                             "appid": Constants.appId]
            
-            networkManager.getWeatherData(parameters: params)
-                .subscribe(onNext: { [weak self] json in
-                    //print(json)
-                    //self?.updatePropertiesWithWeatherData(json: json )
-                    if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
-                        self?.updateProperties(with: weatherModel)
-                    }
-                }).disposed(by: disposeBag)
+//            networkManager.getWeatherData(parameters: params)
+//                .subscribe(onNext: { [weak self] json in
+//                    //print(json)
+//                    //self?.updatePropertiesWithWeatherData(json: json )
+//                    if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
+//                        self?.updateProperties(with: weatherModel)
+//                    }
+//                }).disposed(by: disposeBag)
+            getWeatherDataFromNetwork(with: params)
         }
     }
     
