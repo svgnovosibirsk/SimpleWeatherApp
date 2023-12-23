@@ -14,6 +14,7 @@
 		7C3B11D92B369E2700314976 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B11D72B369E2700314976 /* Main.storyboard */; };
 		7C3B11DB2B369E2800314976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B11DA2B369E2800314976 /* Assets.xcassets */; };
 		7C3B11DE2B369E2800314976 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B11DC2B369E2800314976 /* LaunchScreen.storyboard */; };
+		7C3B11E92B36AAD100314976 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B11E82B36AAD000314976 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		7C3B11DA2B369E2800314976 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C3B11DD2B369E2800314976 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C3B11DF2B369E2800314976 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C3B11E82B36AAD000314976 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7DCA067AF4E81F5984A7C834 /* Pods-SimpleWeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleWeatherApp.release.xcconfig"; path = "Target Support Files/Pods-SimpleWeatherApp/Pods-SimpleWeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 				7C3B11E62B369FA800314976 /* Model */,
 				7C3B11E52B369F9D00314976 /* View */,
 				7C3B11E72B369FAF00314976 /* ViewModel */,
+				7C3B11E82B36AAD000314976 /* Constants.swift */,
 				7C3B11D12B369E2700314976 /* AppDelegate.swift */,
 				7C3B11D32B369E2700314976 /* SceneDelegate.swift */,
 				7C3B11D72B369E2700314976 /* Main.storyboard */,
@@ -233,6 +236,7 @@
 				7C3B11D62B369E2700314976 /* ViewController.swift in Sources */,
 				7C3B11D22B369E2700314976 /* AppDelegate.swift in Sources */,
 				7C3B11D42B369E2700314976 /* SceneDelegate.swift in Sources */,
+				7C3B11E92B36AAD100314976 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
