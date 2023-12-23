@@ -8,6 +8,8 @@
 import Foundation
 
 enum Constants {
+    static let appId = "3a0bc9af6005adbde8d85a2586403ba7"
+    
     static let fontSize_20: CGFloat = 20.0
     static let fontSize_40: CGFloat = 40.0
     
@@ -24,4 +26,5 @@ enum Constants {
     static let buttonTitle = "get weather"
     static let iconSunny = "sunny"
     static let testTemperature = "+21"
+    static let locationUnavailable = "Location Unavailable"
 }

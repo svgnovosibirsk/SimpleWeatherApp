@@ -131,11 +131,7 @@ final class ViewController: UIViewController {
     
     //MARK: - Flow
     @objc func getWeatherButtonDidPress() {
-        print(#function)
-        
-//        viewModel.cityName.onNext("Gothem city") // TEST
-//        viewModel.iconImage.onNext(UIImage(named: "snow5")!) // TEST
-//        viewModel.temperature.onNext("-12") // TEST
+        viewModel.getWeatherButtonDidPress()
     }
     
     private func bindToViewModel() {
