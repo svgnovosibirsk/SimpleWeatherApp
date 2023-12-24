@@ -48,7 +48,6 @@ final class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_20)
-        //label.text = Constants.testCityName
         label.text = Constants.emptyString
         return label
     }()
@@ -60,7 +59,6 @@ final class ViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: Constants.fontSize_40)
-        //label.text = Constants.testTemperature
         label.text = Constants.emptyString
         return label
     }()
