@@ -15,7 +15,14 @@ final class ViewModel: NSObject {
     private enum LocalConstants {
         static let keyAppId = "appid"
         static let incorrectData = "Incorrect data"
-        static let celsiusCoefficient = 273.15
+        
+        static let zero = 0
+        static let doubleZero = 0.0
+        static let daysCount = 3
+        
+        static let first = 0
+        static let second = 1
+        static let third = 2
     }
     
     //MARK: Properties
@@ -45,10 +52,8 @@ final class ViewModel: NSObject {
     
     //MARK: - Methods
     func getWeatherButtonDidPress(with cityName: String) {
-        //TODO: Keys to Constants
         let params = [Constants.keyQ: cityName, LocalConstants.keyAppId: Constants.appId]
         
-        //TODO: To make weather and forcast requests via Dispatch group and update UI when they both a finished
         getWeatherDataFromNetwork(with: params)
         getWeatherForecastFromNetwork(with: params)
     }
@@ -63,20 +68,20 @@ final class ViewModel: NSObject {
     }
     
     private func updateForecastProperties(with dict: [String: Double]) {
-        guard dict.count == 3 else {
+        guard dict.count == LocalConstants.daysCount else {
             cityName.onNext(LocalConstants.incorrectData)
             return
         }
         
-        let sortedForecasts = dict.sorted{ Int($0.key) ?? 0 < Int($1.key) ?? 0 }
+        let sortedForecasts = dict.sorted{ Int($0.key) ?? LocalConstants.zero < Int($1.key) ?? LocalConstants.zero }
         
-        forecastDateFirst.onNext("\(sortedForecasts[0].key)")
-        forecastDateSecond.onNext("\(sortedForecasts[1].key)")
-        forecastDateThird.onNext("\(sortedForecasts[2].key)")
+        forecastDateFirst.onNext("\(sortedForecasts[LocalConstants.first].key)")
+        forecastDateSecond.onNext("\(sortedForecasts[LocalConstants.second].key)")
+        forecastDateThird.onNext("\(sortedForecasts[LocalConstants.third].key)")
         
-        forecastTemperatureFirst.onNext("\(Int(sortedForecasts[0].value - LocalConstants.celsiusCoefficient))")
-        forecastTemperatureSecond.onNext("\(Int(sortedForecasts[1].value - LocalConstants.celsiusCoefficient))")
-        forecastTemperatureThird.onNext("\(Int(sortedForecasts[2].value - LocalConstants.celsiusCoefficient))")
+        forecastTemperatureFirst.onNext("\(Int(sortedForecasts[LocalConstants.first].value - Constants.celsiusCoefficient))")
+        forecastTemperatureSecond.onNext("\(Int(sortedForecasts[LocalConstants.second].value - Constants.celsiusCoefficient))")
+        forecastTemperatureThird.onNext("\(Int(sortedForecasts[LocalConstants.third].value - Constants.celsiusCoefficient))")
     }
     
     private func setupLocationManager() {
@@ -86,22 +91,27 @@ final class ViewModel: NSObject {
         locationManager.startUpdatingLocation()
     }
     
-    //TODO: To make weather and forcast requests via Dispatch group and update UI when they both a finished
     private func getWeatherDataFromNetwork(with params: [String: String]) {
-        networkManager.getWeatherData(parameters: params)
+        guard let weatherData = networkManager.getWeatherData(parameters: params) else { return }
+        weatherData
             .subscribe(onNext: { [weak self] json in
                 if let weatherModel = self?.jsonParser.parseWeatherData(from: json) {
                     self?.updateProperties(with: weatherModel)
                 }
+            }, onError: { [weak self] error in
+                self?.cityName.onNext(LocalConstants.incorrectData)
             }).disposed(by: disposeBag)
     }
     
     private func getWeatherForecastFromNetwork(with params: [String: String]) {
-        networkManager.getWeatherForcast(parameters: params)
+        guard let weatherForcast = networkManager.getWeatherForcast(parameters: params) else { return }
+        weatherForcast
             .subscribe(onNext: { [weak self] json in
                 if let forecast = self?.jsonParser.parseWeatherForecast(from: json) {
                     self?.updateForecastProperties(with: forecast)
                 }
+            }, onError: {[weak self] error in
+                self?.cityName.onNext(LocalConstants.incorrectData)
             }).disposed(by: disposeBag)
     }
 }
@@ -110,19 +120,17 @@ extension ViewModel: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager,
                          didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        if location.horizontalAccuracy > 0 {
+        if location.horizontalAccuracy > LocalConstants.doubleZero {
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
             
             let latitude = String(location.coordinate.latitude)
             let longitude = String(location.coordinate.longitude)
             
-            //TODO: Keys to Constants
             let params: [String: String] = [Constants.keyLatitude: latitude,
                                             Constants.keyLongitude: longitude,
                                             LocalConstants.keyAppId: Constants.appId]
            
-            //TODO: join in dispatch group
             getWeatherDataFromNetwork(with: params)
             getWeatherForecastFromNetwork(with: params)
         }

@@ -13,6 +13,14 @@ enum Constants {
     static let keyLatitude = "lat"
     static let keyLongitude = "lon"
     
+    static let cityNamePlaceholder = "enter city name"
+    static let buttonTitle = "get weather"
+    static let iconSunny = "sunny"
+    static let emptyString = " "
+    static let locationUnavailable = "Location Unavailable"
+    
+    static let celsiusCoefficient = 273.15
+    
     static let fontSize_20: CGFloat = 20.0
     static let fontSize_30: CGFloat = 30.0
     static let fontSize_40: CGFloat = 40.0
@@ -25,10 +33,4 @@ enum Constants {
     static let constant_80: CGFloat = 80.0
     static let constant_100: CGFloat = 100.0
     static let constant_200: CGFloat = 200.0
-    
-    static let cityNamePlaceholder = "enter city name"
-    static let buttonTitle = "get weather"
-    static let iconSunny = "sunny"
-    static let emptyString = " "
-    static let locationUnavailable = "Location Unavailable"
 }

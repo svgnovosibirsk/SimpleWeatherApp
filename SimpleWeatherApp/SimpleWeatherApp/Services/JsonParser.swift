@@ -15,6 +15,13 @@ private enum JsonConstants {
     static let keyId = "id"
     static let keyList = "list"
     static let keyDtTxt = "dt_txt"
+    
+    static let iStart = 10
+    static let iEnd = 26
+    static let iStep = 8
+    
+    static let offset_8 = 8
+    static let offset_11 = 11
 }
 
 final class JsonParser {
@@ -24,7 +31,7 @@ final class JsonParser {
         //TODO: Keys to Constants
         if let response = json[JsonConstants.keyMain] as? [String: Any] {
             if let temp = response[JsonConstants.keyTemp] as? Double {
-                weatherModel.temperature = Int(temp - 273.15)
+                weatherModel.temperature = Int(temp - Constants.celsiusCoefficient)
             }
             
             if let name = json[JsonConstants.keyName] as? String {
@@ -45,15 +52,15 @@ final class JsonParser {
         var forecasts: [String: Double] = [:]
         //TODO: Keys to Constants
         if let forecastList = json[JsonConstants.keyList] as? [[String: Any]] {
-            var i = 10
+            var i = JsonConstants.iStart
             
-            while i <= 26 {
+            while i <= JsonConstants.iEnd {
                 let forecast = forecastList[i]
                 var day = ""
                 
                 if let textDate = forecast[JsonConstants.keyDtTxt] as? String {
-                    let start = textDate.index(textDate.startIndex, offsetBy: 8)
-                    let end = textDate.index(textDate.startIndex, offsetBy: 11)
+                    let start = textDate.index(textDate.startIndex, offsetBy: JsonConstants.offset_8)
+                    let end = textDate.index(textDate.startIndex, offsetBy: JsonConstants.offset_11)
                     let range = start..<end
                     let substring = String(textDate[range]).trimmingCharacters(in: .whitespaces)
                     day = substring
@@ -65,7 +72,7 @@ final class JsonParser {
                     }
                 }
                 
-                i += 8
+                i += JsonConstants.iStep
             }
         }
         return forecasts

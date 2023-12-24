@@ -180,7 +180,7 @@ final class ViewController: UIViewController {
     
     //MARK: - Flow
     @objc func getWeatherButtonDidPress() {
-        let cityName = selectCityTextField.text!
+        let cityName = selectCityTextField.text!.trimmingCharacters(in: .whitespaces)
         viewModel.getWeatherButtonDidPress(with: cityName)
     }
     
@@ -212,8 +212,6 @@ final class ViewController: UIViewController {
         viewModel.forecastDateThird.bind(to: forecastDateLabelThird.rx.text)
             .disposed(by: disposeBag)
     }
-    
-    //TODO: Implement Keyboard handling
 }
 
 //MARK: Setup UI
