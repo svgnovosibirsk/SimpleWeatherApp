@@ -175,6 +175,7 @@ final class ViewController: UIViewController {
         
         setupScreen()
         bindToViewModel()
+        setupDismissKeyboardGestureRecognizer()
     }
     
     //MARK: - Flow
@@ -299,5 +300,15 @@ private extension ViewController {
             make.trailing.equalToSuperview().offset(-Constants.constant_20)
             make.height.equalTo(Constants.constant_80)
         }
+    }
+    
+    //MARK: - Keyboard handling
+    private func setupDismissKeyboardGestureRecognizer() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc func dismissKeyboard(_ recognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
 }
